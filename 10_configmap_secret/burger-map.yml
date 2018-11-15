@@ -1,0 +1,11 @@
+apiVersion: v1
+data:
+  dessert: Jamwich
+  salad: Chicken Club Salad
+  simple-config.txt: |
+    # This is a sample config file that you might use to configure an application
+    meal = Super Whooper
+    drink = Coke
+kind: ConfigMap
+metadata:
+  name: my-config

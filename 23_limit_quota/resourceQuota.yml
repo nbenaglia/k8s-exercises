@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: misc-quotas
+spec:
+  hard:
+    requests.cpu: "1"
+    requests.memory: 1Gi
+    limits.cpu: "2"
+    limits.memory: 2Gi
+    pods: 10
+    replicationcontrollers: 5
+    secrets: 10
+    configmaps: 10
+    persistentvolumeclaims: 4
+    services: 5
+

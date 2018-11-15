@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: nodeport-svc
+spec:
+  type: NodePort
+  selector:
+    app: poddoz
+  ports:
+  - port: 80
+    targetPort: 8080
+    nodePort: 31999

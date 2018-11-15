@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: postgres
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - image: postgres:9.6-alpine
+        name: postgres
+        ports:
+        - containerPort: 5432
+          protocol: TCP
+        volumeMounts:
+        - name: postgres-persistent-storage
+          mountPath: /var/lib/postgresql/data
+      restartPolicy: Always
+      volumes:
+        - name: postgres-persistent-storage
+          persistentVolumeClaim:
+            claimName: pv-claim-postgres

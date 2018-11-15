@@ -1,0 +1,106 @@
+apiVersion: apps/v1beta2
+kind: StatefulSet
+metadata:
+  name: sf-mongodb
+spec:
+  serviceName: svc-mongodb
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mongodb-test
+  template:
+    metadata:
+      labels:
+        app: mongodb-test
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                    - mongodb-test
+              topologyKey: "kubernetes.io/hostname"
+      terminationGracePeriodSeconds: 15
+      securityContext:
+        runAsUser: 0
+        fsGroup: 0
+      volumes:
+      - name: config
+        configMap:
+          name: "mongo-init"
+      containers:
+      - name: mongo
+        imagePullPolicy: IfNotPresent
+        image: mongo:3.6.4
+        resources:
+          requests:
+            memory: 500Mi
+            cpu: 500m
+        ports:
+        - containerPort: 27017
+        livenessProbe:
+          exec:
+            command:
+            - mongo
+            - --eval
+            - db.adminCommand('ping')
+          initialDelaySeconds: 15
+          timeoutSeconds: 10
+        readinessProbe:
+          exec:
+            command:
+            - mongo
+            - --eval
+            - db.adminCommand('ping')
+          initialDelaySeconds: 15
+          timeoutSeconds: 10
+        command:
+          - /usr/bin/mongod
+          - --replSet
+          - rs0
+          - --bind_ip_all
+          - --smallfiles
+          - --noprealloc
+          - --dbpath
+          - /data/db
+        #volumeMounts:
+        #- name: mongo-db
+        #  mountPath: /data/db
+      - name: init-mongo
+        image: mongo:3.6.4
+        command:
+        - bash
+        - /config/init.sh
+        livenessProbe:
+          exec:
+            command:
+            - mongo
+            - --eval
+            - db.adminCommand('ping')
+          initialDelaySeconds: 15
+          timeoutSeconds: 10
+        readinessProbe:
+          exec:
+            command:
+            - mongo
+            - --eval
+            - db.adminCommand('ping')
+          initialDelaySeconds: 15
+          timeoutSeconds: 10
+        volumeMounts:
+        - name: config
+          mountPath: /config
+      restartPolicy: Always
+#  volumeClaimTemplates:
+#  - metadata:
+#      name: mongo-db
+#    spec:
+#      storageClassName: nfsmongo
+#      resources:
+#        requests:
+#          storage: 5Gi
+#      accessModes:
+#      - ReadWriteOnce

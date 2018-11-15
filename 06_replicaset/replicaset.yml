@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: ReplicaSet
+metadata:
+  name: poddoz-rs
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: poddoz
+  template:
+    metadata:
+      labels:
+        app: poddoz
+    spec:
+      containers:
+      - name: poddoz
+        image: nicobenaz/k8s-demo/poddoz:3
+        imagePullPolicy: IfNotPresent

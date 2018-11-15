@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: poddoz-ing
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  backend:
+    serviceName: default-http-backend
+    servicePort: 80
+  rules:
+  - host: myminikube.info
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: poddoz-svc
+          servicePort: 80
+  - host: cheeses.all
+    http:
+      paths:
+      - path: /stilton
+        backend:
+          serviceName: poddoz-svc
+          servicePort: 80
+      - path: /cheddar
+        backend:
+          serviceName: poddoz-svc
+          servicePort: 80

@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: poddoz
+spec:
+  initContainers:
+  - image: nicobenaz/k8s-demo/poddoz:3
+    name: init-copy
+    command: ["cp"]
+    args: ["/app.js", "/scratch"]
+    volumeMounts:
+    - mountPath: /scratch
+      name: scratch
+  containers:
+    - image: nicobenaz/k8s-demo/poddoz:3
+      name: poddoz
+      ports:
+      - containerPort: 8080
+        name: http
+        protocol: TCP
+      volumeMounts:
+      - mountPath: /scratch
+        name: scratch
+    - image: busybox
+      name: busybox
+      command: ["sleep"]
+      args: ["3600"]
+      volumeMounts:
+      - mountPath: /scratch
+        name: scratch
+  volumes:
+  - name: scratch
+    emptyDir:
+      medium: Memory

@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: poddoz
+spec:
+  replicas: 3
+  minReadySeconds: 10 #Specifies how long a newly created pod should be ready before the pod is treated as available.
+  revisionHistoryLimit: 14
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      name: poddoz
+      labels:
+        app: poddoz
+    spec:
+      containers:
+      - image: nicobenaz/k8s-demo/poddoz:1
+        name: poddoz
+        readinessProbe:
+          periodSeconds: 1
+          httpGet:
+            path: /
+            port: 8080

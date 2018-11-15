@@ -1,0 +1,19 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: poddoz-cron
+spec:
+  schedule: "*/20 8-19 * * 1-5"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: poddoz-periodic-batch-job
+        spec:
+          containers:
+          - name: redmine-cron
+            image: nicobenaz/k8s-demo/poddoz:3
+            imagePullPolicy: IfNotPresent
+          restartPolicy: OnFailure

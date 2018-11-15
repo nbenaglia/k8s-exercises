@@ -1,0 +1,13 @@
+{
+  "name": "poddoz_app",
+  "version": "4.0.0",
+  "description": "Poddoz written in Node.js on Docker",
+  "author": "Nicola Benaglia <nico.benaz@gmail.com>",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.16.1"
+  }
+}

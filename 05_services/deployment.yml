@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: poddoz
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: poddoz
+  template:
+    metadata:
+      labels:
+        app: poddoz
+    spec:
+      containers:
+      - name: poddoz
+        image: nicobenaz/k8s-demo/poddoz:3
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 8080

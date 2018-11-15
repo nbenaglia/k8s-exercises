@@ -1,0 +1,39 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: poddoz-config
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: poddoz
+  template:
+    metadata:
+      labels:
+        app: poddoz
+    spec:
+      containers:
+      - name: poddoz
+        image: nicobenaz/k8s-demo/poddoz:3
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 8080
+        env:
+          - name: DESSERT
+            valueFrom:
+              configMapKeyRef:
+                name: my-config
+                key: dessert
+          - name: SALAD
+            valueFrom:
+              configMapKeyRef:
+                name: my-config
+                key: salad
+        volumeMounts:  # only through a volume, variables are refreshed when they change.
+          - name: config-volume
+            mountPath: /config
+      volumes:
+        - name: config-volume
+          configMap:
+            name: my-config
