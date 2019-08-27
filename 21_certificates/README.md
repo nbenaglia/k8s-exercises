@@ -36,8 +36,8 @@ You should have these files:
 SUBMIT CSR TO KUBERNETES
 
 Send certificate to K8S for approval
-* cat <<EOF | kubectl create -f -
-
+* cat <<EOF | kubectl create -f 
+```
 apiVersion: certificates.k8s.io/v1beta1
 kind: CertificateSigningRequest
 metadata:
@@ -51,7 +51,7 @@ spec:
   - key encipherment
   - server auth
 EOF
-
+```
 Check your CSR status
 * kubectl get csr
 
@@ -63,13 +63,13 @@ A Kubernetes administrator (with appropriate permissions) can manually approve (
 
 Check new status
 * kubectl get csr
-
+```
 NAME                  AGE       REQUESTOR       CONDITION
 nicobenaz_k8s_ca         4s        minikube-user   Approved,Issued
-
+```
 Check info about your certificate
 * kubectl describe csr nicobenaz_k8s_ca
-
+```
 Name:               nicobenaz_k8s_ca
 Labels:             <none>
 Annotations:        <none>
@@ -84,7 +84,7 @@ Subject:
          Locality:       Bergamo
          Province:       Lombardia
 Events:  <none>
-
+```
 You can download the issued certificate and save it to a server.crt file
 * kubectl get csr nicobenaz_k8s_ca -o jsonpath='{.status.certificate}' | base64 -d > server.crt
 
