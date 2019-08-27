@@ -24,6 +24,7 @@ Create a text file with certificate information
 * openssl x509 -noout -fingerprint -text < nicobenaz.crt > nicobenaz.info
 
 You should have these files:
+
 - private.key: your private aes128 encrypted key
 - nicobenaz.crt: your self-signed certificate
 - nicobenaz.csr: your certificate signing request
@@ -36,6 +37,7 @@ SUBMIT CSR TO KUBERNETES
 
 Send certificate to K8S for approval
 * cat <<EOF | kubectl create -f -
+
 apiVersion: certificates.k8s.io/v1beta1
 kind: CertificateSigningRequest
 metadata:
@@ -52,6 +54,7 @@ EOF
 
 Check your CSR status
 * kubectl get csr
+
 NAME                  AGE       REQUESTOR       CONDITION
 nicobenaz_k8s_ca         4s        minikube-user   Pending
 
@@ -60,11 +63,13 @@ A Kubernetes administrator (with appropriate permissions) can manually approve (
 
 Check new status
 * kubectl get csr
+
 NAME                  AGE       REQUESTOR       CONDITION
 nicobenaz_k8s_ca         4s        minikube-user   Approved,Issued
 
 Check info about your certificate
 * kubectl describe csr nicobenaz_k8s_ca
+
 Name:               nicobenaz_k8s_ca
 Labels:             <none>
 Annotations:        <none>
