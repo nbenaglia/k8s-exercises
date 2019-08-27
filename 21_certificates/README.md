@@ -6,7 +6,7 @@ Every Kubernetes cluster has a cluster root Certificate Authority (CA).
 The CA is generally used by cluster components to validate the API server’s certificate, by the API server to validate kubelet client certificates, etc.
 
 
-SELF-SIGNED CERTIFICATE GENERATION
+## SELF-SIGNED CERTIFICATE GENERATION
 
 Generate private key with passphase
 * openssl genrsa -aes128 -out private.key 2048
@@ -33,7 +33,7 @@ You should have these files:
 
 
 
-SUBMIT CSR TO KUBERNETES
+## SUBMIT CSR TO KUBERNETES
 
 Send certificate to K8S for approval
 * cat <<EOF | kubectl create -f 
