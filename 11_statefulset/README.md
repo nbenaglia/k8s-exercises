@@ -1,19 +1,19 @@
-## STATEFULSETS
+# STATEFULSETS
 
-# These kinds of resources can be updated in Kubernetes and applications should be designed to re-read configuration values in them
-# (when exposed as volume).
+These kinds of resources can be updated in Kubernetes and applications should be designed to re-read configuration values in them (when exposed as volume).
 
 # CONFIGMAP
 
-# From file simple-config.txt we're going to create a ConfigMap.
-# We add some more parameters.
+## From file simple-config.txt we're going to create a ConfigMap.
+## We add some more parameters.
+
 * kubectl create configmap my-config --from-file=simple-config.txt --from-literal=DESSERT="Jamwich" --from-literal=SALAD="Chicken Club Salad"
 
-# Now we see the ConfigMap from the resource in memory:
+## Now we see the ConfigMap from the resource in memory:
 * kubectl get configmaps my-config -o yaml
 * curl
 
-# Let's change the value of a variable (choose one):
+## Let's change the value of a variable (choose one):
 * kubectl edit configmap my-config
 * kubectl exec -ti poddoz-config -- bash
 * cd /config
@@ -25,10 +25,10 @@ Only through mounted ConfigMaps is possible to have your variables updated when 
 
 # SECRET
 
-# We create a imagePullSecrets for docker credentials
+## We create a imagePullSecrets for docker credentials
 * kubectl create secret docker-registry my-image-pull-secret --docker-username=pippo --docker-password=password --docker-email=email@domain.com
 
-# Secrets are stored on tmpfs volumes (RAM disks) and are not written to disk on nodes.
+## Secrets are stored on tmpfs volumes (RAM disks) and are not written to disk on nodes.
 * kubectl create secret generic my-secret --from-file=my-cert.crt --from-file=my.key
 * kubectl describe secrets my-secret
 * kubectl create -f poddoz-secret.yml
