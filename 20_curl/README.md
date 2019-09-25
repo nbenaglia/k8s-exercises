@@ -1,7 +1,12 @@
 # CURL AND K8S
 
-You can instruct K8S master with CURL, instead of using KUBECTL. Under the hood KUBECTL uses CURL.
-Try a kubectl command adding the param --v=9 and see logs. You'll notice the CURL command executed.
+You can instruct K8S master with CURL, instead of using KUBECTL. 
+
+Under the hood KUBECTL uses CURL.
+
+Try a kubectl command adding the param --v=9 and see logs. 
+
+You'll notice the CURL command executed.
 
 To manually use CURL, you need to use the correct credentials to connect to K8S master.
 
