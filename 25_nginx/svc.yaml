@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nbenaglia-nginx
+spec:
+  selector:
+    app: nbenaglia-nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080

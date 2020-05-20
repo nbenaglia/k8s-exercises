@@ -1,0 +1,26 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: nbenaglia-nginx
+spec:
+  selector:
+    matchLabels:
+      app: nbenaglia-nginx
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nbenaglia-nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: "my-config"
+          mountPath: "/etc/nginx/"
+      volumes:
+      - name: "my-config"
+        configMap:
+          name: "nbenaglia-nginx"
