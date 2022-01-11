@@ -1,0 +1,17 @@
+# Source: https://faun.pub/cka-exercises-network-policy-8a83b4eaa767
+
+# MOON
+kubectl create ns moon
+kubectl run web --image=nginx --labels=app=web --port 80 -n moon
+kubectl expose pod web --type=ClusterIP --port=80 -n moon
+
+kubectl run  api --image=nginx --labels=app=api --port 80 -n moon
+kubectl expose pod api --type=ClusterIP --port=80 -n moon
+
+kubectl run  db --image=nginx --labels=app=db --port 80 -n moon
+kubectl expose pod db --type=ClusterIP --port=80 -n moon
+
+# EARTH
+kubectl create ns earth
+kubectl run web --image=nginx --labels=app=web --port 80 -n earth
+kubectl expose pod web --type=ClusterIP --port=80 -n earth
