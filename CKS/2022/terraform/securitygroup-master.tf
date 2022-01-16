@@ -17,21 +17,21 @@ resource "aws_security_group" "cks-master" {
 
 resource "aws_security_group_rule" "cks-master-ingress-node-https" {
   description              = "Allow pods to communicate with the cluster API Server"
-  from_port                = 443
+  from_port                = 6443
   protocol                 = "tcp"
   security_group_id        = aws_security_group.cks-master.id
   source_security_group_id = aws_security_group.cks-node.id
-  to_port                  = 443
+  to_port                  = 6443
   type                     = "ingress"
 }
 
 resource "aws_security_group_rule" "cks-master-ingress-workstation-https" {
   cidr_blocks       = ["${local.workstation-external-cidr}"]
   description       = "Allow workstation to communicate with the cluster API Server"
-  from_port         = 443
+  from_port         = 6443
   protocol          = "tcp"
   security_group_id = aws_security_group.cks-master.id
-  to_port           = 443
+  to_port           = 6443
   type              = "ingress"
 }
 
