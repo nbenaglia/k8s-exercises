@@ -38,7 +38,7 @@ resource "aws_security_group_rule" "cks-master-ingress-workstation-https" {
 resource "aws_security_group_rule" "cks-master-ingress-node-ssh" {
   cidr_blocks       = ["${local.workstation-external-cidr}"]
   description       = "Allow workstation to communicate with node by SSH"
-  from_port         = 0
+  from_port         = 22
   protocol          = "tcp"
   security_group_id = aws_security_group.cks-master.id
   to_port           = 22

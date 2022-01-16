@@ -36,7 +36,7 @@ resource "aws_security_group_rule" "cks-node-ingress-cluster" {
 resource "aws_security_group_rule" "cks-node-ingress-node-ssh" {
   cidr_blocks       = ["${local.workstation-external-cidr}"]
   description       = "Allow workstation to communicate with node by SSH"
-  from_port         = 0
+  from_port         = 22
   protocol          = "tcp"
   security_group_id = aws_security_group.cks-node.id
   to_port           = 22
