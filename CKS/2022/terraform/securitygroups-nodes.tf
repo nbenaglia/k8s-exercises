@@ -22,6 +22,7 @@ resource "aws_security_group_rule" "cks-node-ingress-self" {
   security_group_id = aws_security_group.cks-node.id
   to_port           = 65535
   type              = "ingress"
+  self              = true
 }
 
 resource "aws_security_group_rule" "cks-node-ingress-cluster" {
@@ -31,6 +32,7 @@ resource "aws_security_group_rule" "cks-node-ingress-cluster" {
   security_group_id = aws_security_group.cks-node.id
   to_port           = 65535
   type              = "ingress"
+  self              = true
 }
 
 resource "aws_security_group_rule" "cks-node-ingress-node-ssh" {
